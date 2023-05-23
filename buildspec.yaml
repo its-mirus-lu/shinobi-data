@@ -11,14 +11,21 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building Docker test image...
-      - docker build -t $IMAGE_REPO_NAME:$TEST_IMAGE_TAG -f dockerfile .
-      # - docker run -e CI=true $IMAGE_REPO_NAME:$TEST_IMAGE_TAG <unit test command?>
+      - docker build -t $REPOSITORY_URI:$CODEBUILD_RESOLVED_SOURCE_VERSION -f dockerfile .
+      # - docker run -e CI=true $IMAGE_REPO_URL:$TEST_IMAGE_TAG <unit test command?>
       - echo Build started on `date`
       - echo Building the Docker image...
-      - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG .
-      - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
+      - docker build -t $REPOSITORY_URI:$CODEBUILD_RESOLVED_SOURCE_VERSION .
+      # - docker build -t $IMAGE_REPO_URL:$CODEBUILD_RESOLVED_SOURCE_VERSION .
+      # - docker tag $IMAGE_REPO_URL:$CODEBUILD_RESOLVED_SOURCE_VERSION $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_URL:$IMAGE_TAG
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
-      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
+      # - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_URL:$CODEBUILD_RESOLVED_SOURCE_VERSION
+      - docker push $REPOSITORY_URI:$CODEBUILD_RESOLVED_SOURCE_VERSION
+      - export imageTag=$CODEBUILD_RESOLVED_SOURCE_VERSION
+  env:
+    exported-variables:
+      - 'imageTag'
+      
