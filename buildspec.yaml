@@ -27,5 +27,5 @@ phases:
       - export imageTag=$CODEBUILD_RESOLVED_SOURCE_VERSION
   env:
     exported-variables:
-      - 'imageTag'
+      - imageTag
       
