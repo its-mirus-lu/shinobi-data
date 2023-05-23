@@ -1,4 +1,7 @@
 version: 0.2
+env:
+  exported-variables:
+    - imageTag
 phases:
   install:
     runtime-versions:
@@ -25,7 +28,5 @@ phases:
       # - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_URL:$CODEBUILD_RESOLVED_SOURCE_VERSION
       - docker push $REPOSITORY_URI:$CODEBUILD_RESOLVED_SOURCE_VERSION
       - export imageTag=$CODEBUILD_RESOLVED_SOURCE_VERSION
-  env:
-    exported-variables:
-      - imageTag
+  
       
