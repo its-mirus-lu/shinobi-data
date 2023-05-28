@@ -1,0 +1,20 @@
+version: 0.2
+env:
+  shell: bash
+  git-credential-helper: yes
+phases:
+  
+  pre_build:
+    commands:
+      - echo "prebuild"
+      
+  build:
+    commands:
+      - echo "build"
+      
+  post_build:
+    commands:
+      - echo "postbuild"
+      
+  
+      
