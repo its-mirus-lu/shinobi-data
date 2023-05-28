@@ -10,6 +10,8 @@ phases:
     commands:
       - echo Logging in to Amazon ECR...
       - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
+      # - 
+      # - output=$(aws ecr describe-images --repository-name $REPOSITORY_NAME --profile ss-shared --image-ids imageTag=$CODEBUILD_RESOLVED_SOURCE_VERSION 2>&1)
   build:
     commands:
       - echo Build started on `date`
