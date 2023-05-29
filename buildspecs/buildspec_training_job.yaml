@@ -12,7 +12,7 @@ phases:
     commands:
       - echo "build"
       
-      - python training_stage_script.py
+      - python training.py
       
   post_build:
     commands:
