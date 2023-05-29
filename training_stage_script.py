@@ -8,7 +8,7 @@ region = os.environ["AWS_DEFAULT_REGION"]
 build_version = '-v' + os.environ['CODEBUILD_BUILD_NUMBER']
 job_name_prefix = os.environ['JOB_NAME_PREFIX']
 role = os.environ['SAGEMAKER_ROLE_ARN'] 
-bucket = os.environ['SAGEMAKER_DATALAKE_BUCKET'] 
+bucket = 's3://{}'.format(os.environ['SAGEMAKER_DATALAKE_BUCKET'])
 
 # unique job name
 job_name = job_name_prefix + build_version
