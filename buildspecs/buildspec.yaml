@@ -14,7 +14,7 @@ phases:
       - |
         last_hash_dockerfile=$(git log -n 1 --pretty=format:%H -- dockerfile)
         echo "Latest available dockerfile hash $last_hash_dockerfile"
-        output=$(aws ecr describe-images --repository-name $REPOSITORY_NAME --image-ids imageTag=latest --query 'imageDetails[].imageTags' --output text 2>&1)
+        output=$(aws ecr describe-images --repository-name $REPOSITORY_NAME --image-ids imageTag=$last_hash_dockerfile --query 'imageDetails[].imageTags' --output text 2>&1)
         echo $output
         if [[ "$output" == *"$last_hash_dockerfile"* ]] && [[ "$output" != *"ImageNotFoundException"* ]]; then
             echo "image already exists"
@@ -22,6 +22,7 @@ phases:
         else
             echo "image doesn't exist"
             export DOCKER_IMAGE_ALREADY_BUILT=false
+            export CURRENT_HASH_DOCKERFILE=$last_hash_dockerfile
         fi
       
   build:
@@ -31,7 +32,7 @@ phases:
         if [[ "$DOCKER_IMAGE_ALREADY_BUILT" == "false" ]]; then
             echo Build started on `date`
             echo Building the Docker image...
-            docker build -t $REPOSITORY_URI:$CODEBUILD_RESOLVED_SOURCE_VERSION -t $REPOSITORY_URI:$LATEST_IMAGE_TAG -f dockerfile .
+            docker build -t $REPOSITORY_URI:$CURRENT_HASH_DOCKERFILE -t $REPOSITORY_URI:$LATEST_IMAGE_TAG -f dockerfile .
         else
             echo "image exists"
         fi
@@ -41,9 +42,9 @@ phases:
       - |
         if [[ "$DOCKER_IMAGE_ALREADY_BUILT" == "false" ]]; then
             echo Pushing the Docker image...
-            docker push $REPOSITORY_URI:$CODEBUILD_RESOLVED_SOURCE_VERSION
+            docker push $REPOSITORY_URI:$CURRENT_HASH_DOCKERFILE
             docker push $REPOSITORY_URI:$LATEST_IMAGE_TAG
-            export imageTag=$CODEBUILD_RESOLVED_SOURCE_VERSIONå
+            export imageTag=$CURRENT_HASH_DOCKERFILE
         else
             echo "image exists"
         fi
