@@ -19,9 +19,9 @@ container = '{}:latest'.format(repo_uri)
 
 
 
-input_data = bucket + '/iris/input/iris.csv'
+input_data = bucket + '/alpaca-lora/input/alpaca_data_cleaned_archive.json'
 # input_data = bucket + '/iris/input/'
-output_location = bucket + '/iris/output'
+output_location = bucket + '/alpaca-lora/output'
 
 train_instance_type = 'ml.c4.xlarge'
 train_instance_count = 1
