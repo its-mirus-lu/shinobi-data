@@ -14,7 +14,7 @@ phases:
       - |
         last_hash_dockerfile=$(git log -n 1 --pretty=format:%H -- dockerfile)
         echo "Latest available dockerfile hash $last_hash_dockerfile"
-        output=$(aws ecr describe-images --repository-name $REPOSITORY_NAME --image-ids imageTag=$last_hash_dockerfile --query 'imageDetails[].imageTags' --output text 2>&1)
+        output=$(aws ecr describe-images --repository-name $REPOSITORY_NAME --image-ids imageTag=latest --query 'imageDetails[].imageTags' --output text 2>&1)
         echo $output
         if [[ "$output" == *"$last_hash_dockerfile"* ]] && [[ "$output" != *"ImageNotFoundException"* ]]; then
             echo "image already exists"
