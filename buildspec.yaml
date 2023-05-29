@@ -31,7 +31,7 @@ phases:
         if [[ "$DOCKER_IMAGE_ALREADY_BUILT" == "false" ]]; then
             echo Build started on `date`
             echo Building the Docker image...
-            docker build -t $REPOSITORY_URI:$CODEBUILD_RESOLVED_SOURCE_VERSION -t $REPOSITORY_URI:latest -f dockerfile .
+            docker build -t $REPOSITORY_URI:$CODEBUILD_RESOLVED_SOURCE_VERSION -t $REPOSITORY_URI:$LATEST_IMAGE_TAG -f dockerfile .
         else
             echo "image exists"
         fi
@@ -42,7 +42,7 @@ phases:
         if [[ "$DOCKER_IMAGE_ALREADY_BUILT" == "false" ]]; then
             echo Pushing the Docker image...
             docker push $REPOSITORY_URI:$CODEBUILD_RESOLVED_SOURCE_VERSION
-            docker push $REPOSITORY_URI:latest
+            docker push $REPOSITORY_URI:$LATEST_IMAGE_TAG
             export imageTag=$CODEBUILD_RESOLVED_SOURCE_VERSIONå
         else
             echo "image exists"
