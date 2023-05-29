@@ -23,7 +23,7 @@ input_data = bucket + '/alpaca-lora/input/alpaca_data_cleaned_archive.json'
 # input_data = bucket + '/iris/input/'
 output_location = bucket + '/alpaca-lora/output'
 
-train_instance_type = 'ml.c4.xlarge'
+train_instance_type = 'ml.g5.4xlarge'
 train_instance_count = 1
 use_spot_instances = True
 
@@ -59,7 +59,7 @@ def create_training_job(job_name, input_data, container, output_location):
             ResourceConfig={
                 'InstanceType': train_instance_type,
                 'InstanceCount': train_instance_count,
-                'VolumeSizeInGB': 20
+                'VolumeSizeInGB': 40
             },
             StoppingCondition={
                 'MaxRuntimeInSeconds': 3600,
