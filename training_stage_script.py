@@ -9,12 +9,13 @@ build_version = '-v' + os.environ['CODEBUILD_BUILD_NUMBER']
 job_name_prefix = os.environ['JOB_NAME_PREFIX']
 role = os.environ['SAGEMAKER_ROLE_ARN'] 
 bucket = 's3://{}'.format(os.environ['SAGEMAKER_DATALAKE_BUCKET'])
+repo_uri = os.environ['REPOSITORY_URI']
 
 # unique job name
 job_name = job_name_prefix + build_version
 
 # train info
-container = '{}.dkr.ecr.{}.amazonaws.com/sagemaker-scikit_bring_your_own:latest'.format(account, region) 
+container = '{}:latest'.format(repo_uri) 
 
 
 
