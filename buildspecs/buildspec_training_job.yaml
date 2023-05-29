@@ -12,7 +12,7 @@ phases:
     commands:
       - echo "build"
       
-      - python training.py
+      - python train.py
       
   post_build:
     commands:
