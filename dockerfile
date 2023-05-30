@@ -1,8 +1,6 @@
 # FROM python:3.7.7-slim-stretch
 FROM nvidia/cuda:11.8.0-devel-ubuntu22.04
 
-
-
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && apt-get install -y \
