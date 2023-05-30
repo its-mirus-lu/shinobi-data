@@ -6,12 +6,12 @@ import boto3, os, time
 # read environment variables
 account = os.environ["AWS_ACCOUNT_ID"]
 region = os.environ["AWS_DEFAULT_REGION"]
-build_version = '-v' + os.environ['CODEBUILD_BUILD_NUMBER']
+build_version = '-v' + os.environ['CODEBUILD_BUILD_NUMBER']+ '-'+hash
 job_name_prefix = os.environ['JOB_NAME_PREFIX']
 role = os.environ['SAGEMAKER_ROLE_ARN'] 
 bucket = 's3://{}'.format(os.environ['SAGEMAKER_DATALAKE_BUCKET'])
 repo_uri = os.environ['REPOSITORY_URI']
-
+hash = os.environ['CODEBUILD_RESOLVED_SOURCE_VERSION']
 # unique job name
 job_name = job_name_prefix + build_version
 
