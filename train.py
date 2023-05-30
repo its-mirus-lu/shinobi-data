@@ -1,4 +1,5 @@
 # Inspired by https://raw.githubusercontent.com/aws-samples/amazon-sagemaker-mlops-byoc-using-codepipeline-aws-cdk/main/repository/train/training-deploy-model.py
+# This file is called from the buildspec_training_job.yaml
 
 import boto3, os, time
 
